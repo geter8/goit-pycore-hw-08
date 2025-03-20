@@ -196,21 +196,20 @@ def birthdays(args, book):
 @input_error
 def parse_input(user_input):
     user_input = user_input.strip()
-    if not user_input:
-        raise ValueError("Empty input. Please enter a command.")
+    if not user_input:  # Перевірка, чи рядок порожній
+        return "", []  # Повертаємо пусту команду, щоб уникнути помилок
     parts = user_input.split()
     return parts[0].lower(), parts[1:]
 
-
 def main():
-    book = load_data()  # Завантажуємо адресну книгу з файлу або створюємо нову
-
+    book = AddressBook()
     print("Welcome to the assistant bot!")
     while True:
-        user_input = input("Enter a command: ")
+        user_input = input("Enter a command: ").strip()
+        if not user_input:  # Перевірка перед обробкою
+            continue
         command, args = parse_input(user_input)
         if command in ["close", "exit"]:
-            save_data(book)  # Зберігаємо дані перед виходом
             print("Good bye!")
             break
         elif command == "hello":
@@ -231,6 +230,7 @@ def main():
             print(birthdays(args, book))
         else:
             print("Invalid command.")
+
 
 
 
