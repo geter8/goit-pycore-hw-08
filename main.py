@@ -202,14 +202,17 @@ def parse_input(user_input):
     return parts[0].lower(), parts[1:]
 
 def main():
-    book = AddressBook()
+    book = load_data()  # Завантаження книги контактів з файлу
     print("Welcome to the assistant bot!")
+
     while True:
         user_input = input("Enter a command: ").strip()
-        if not user_input:  # Перевірка перед обробкою
+        if not user_input:
             continue
         command, args = parse_input(user_input)
+
         if command in ["close", "exit"]:
+            save_data(book)  # Збереження книги перед виходом
             print("Good bye!")
             break
         elif command == "hello":
@@ -230,6 +233,7 @@ def main():
             print(birthdays(args, book))
         else:
             print("Invalid command.")
+
 
 
 
